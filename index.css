@@ -1,0 +1,494 @@
+/* ================================
+   CSS RESET & BASE VARIABLES
+=================================*/
+:root {
+    /* Warna utama (Maroon Theme) */
+    --primary: #800000;      /* Base Maroon */
+    --secondary: #5a0000;    /* Darker Maroon */
+    --accent: #d4a017;       /* Goldenrod (untuk aksen/kontras) */
+    
+    /* Warna tambahan */
+    --light: #f8f0e8;        /* Cream light untuk background */
+    --dark: #2a0a0a;         /* Dark reddish-black untuk teks utama */
+    --success: #228B22;      /* Hijau untuk status sukses */
+    --danger: #CC0000;       /* Merah untuk status penting/peringatan */
+    
+    /* Font keluarga */
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Open Sans', sans-serif;
+}
+
+/* Reset global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ================================
+   BASE STYLES
+=================================*/
+body {
+    font-family: var(--font-body);
+    line-height: 1.6;
+    color: var(--dark);
+    background-color: var(--light);
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* ================================
+   HEADER
+=================================*/
+header {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    height: 50px;
+}
+
+/* Navigasi Desktop */
+nav.desktop-nav {
+    display: flex;
+    gap: 1.5rem;
+}
+nav.desktop-nav a {
+    font-weight: 600;
+    transition: var(--transition);
+    position: relative;
+    padding: 0.5rem 0;
+}
+nav.desktop-nav a:hover { color: var(--primary); }
+nav.desktop-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background-color: var(--primary);
+    transition: var(--transition);
+}
+nav.desktop-nav a:hover::after { width: 100%; }
+
+/* Underline animasi di hover */
+nav.desktop-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary);
+    transition: width 0.3s;
+}
+
+nav.desktop-nav a:hover::after {
+    width: 100%;
+}
+
+/* Tombol menu mobile */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* ================================
+   HERO SECTION
+=================================*/
+.hero {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    padding: 4rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    line-height: 1.2;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    max-width: 600px;
+}
+
+/* Tombol */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: white;
+    color: var(--primary);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* ================================
+   SECTION
+=================================*/
+.section {
+    padding: 4rem 0;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+/* Garis aksen di bawah judul */
+.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: var(--accent);
+    margin: 1rem auto 0;
+}
+
+/* ================================
+   NEWS GRID
+=================================*/
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.news-card {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.news-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.news-img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.news-content {
+    padding: 1.5rem;
+}
+
+.news-date {
+    display: inline-block;
+    background-color: var(--primary);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.news-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.news-excerpt {
+    color: #64748b;
+    margin-bottom: 1rem;
+}
+
+.read-more {
+    color: var(--primary);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* ================================
+   ANNOUNCEMENTS
+=================================*/
+.announcement-list {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.announcement-item {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.announcement-item:last-child {
+    border-bottom: none;
+}
+
+.announcement-badge {
+    background-color: var(--danger);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* ================================
+   QUICK LINKS
+=================================*/
+.quick-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+}
+
+.quick-link-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+}
+
+.quick-link-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.quick-link-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+
+/* ================================
+   FOOTER
+=================================*/
+footer {
+    background-color: var(--dark);
+    color: white;
+    padding: 3rem 0 1.5rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-column h3 {
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.footer-column h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background-color: var(--accent);
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s;
+}
+
+.social-link:hover {
+    background-color: var(--accent);
+}
+
+.copyright {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ================================
+   RESPONSIVE BREAKPOINTS
+=================================*/
+/* Large screens (max 1200px) */
+@media (max-width: 1200px) {
+    .container { padding: 0 2rem; }
+}
+
+/* Medium screens (max 992px) */
+@media (max-width: 992px) {
+    .hero h1 { font-size: 2.2rem; }
+    .hero p { font-size: 1.1rem; }
+    .profile-layout { grid-template-columns: 1fr 250px; }
+}
+
+/* Tablet screens (max 768px) */
+@media (max-width: 768px) {
+    .mobile-menu-btn { display: block; z-index: 1000; }
+    nav.desktop-nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background-color: white;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5rem 2rem;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        transition: right 0.3s ease;
+        z-index: 999;
+    }
+    nav.desktop-nav.active { right: 0; }
+    nav.desktop-nav a {
+        padding: 0.75rem 0;
+        width: 100%;
+        border-bottom: 1px solid #eee;
+    }
+    .hero h1 { font-size: 1.8rem; }
+    .hero p { font-size: 1rem; }
+    .section { padding: 2.5rem 0; }
+    .profile-layout { grid-template-columns: 1fr; }
+    .sidebar { order: -1; margin-bottom: 2rem; }
+}
+
+/* Small screens (max 576px) */
+@media (max-width: 576px) {
+    .logo { height: 40px; }
+    .hero h1 { font-size: 1.5rem; }
+    .btn { padding: 0.6rem 1.2rem; }
+    .news-grid, .quick-links, .gallery-grid { grid-template-columns: 1fr; }
+}
+
+/* ================================
+   ANIMATIONS & ACCESSIBILITY
+=================================*/
+/* Mobile menu slide animation */
+@keyframes slideIn { from { right: -100%; } to { right: 0; } }
+@keyframes slideOut { from { right: 0; } to { right: -100%; } }
+
+/* Ukuran minimum touch target */
+a, button, .btn, .tab-btn {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+/* Prevent zoom di input mobile */
+@media (max-width: 768px) {
+    input, select, textarea { font-size: 16px; }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    :root {
+        --primary: #0044cc;
+        --secondary: #002b80;
+        --accent: #c57600;
+    }
+    a, button { outline: 2px solid transparent; outline-offset: 2px; }
+    a:focus, button:focus { outline-color: var(--accent); }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
