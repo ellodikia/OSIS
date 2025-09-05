@@ -1,1377 +1,711 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Struktur OSIS - SMA Contoh</title>
-
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <style>
-        /* ================================
-           CSS RESET & BASE VARIABLES
-        =================================*/
-        :root {
-            /* Warna utama (Maroon Theme) */
-            --primary: #800000;      /* Base Maroon */
-            --primary-light: #a33333; /* Light Maroon */
-            --secondary: #5a0000;    /* Darker Maroon */
-            --accent: #d4a017;       /* Goldenrod (untuk aksen/kontras) */
-            --accent-dark: #b38614;  /* Darker Goldenrod */
-            
-            /* Warna tambahan */
-            --light: #f8f0e8;        /* Cream light untuk background */
-            --light-gray: #e8e8e8;   /* Light gray untuk borders */
-            --dark: #2a0a0a;         /* Dark reddish-black untuk teks utama */
-            --gray: #64748b;         /* Gray untuk teks sekunder */
-            --success: #228B22;      /* Hijau untuk status sukses */
-            --danger: #CC0000;       /* Merah untuk status penting/peringatan */
-            
-            /* Font keluarga */
-            --font-heading: 'Poppins', sans-serif;
-            --font-body: 'Open Sans', sans-serif;
-            
-            /* Transition untuk animasi */
-            --transition: all 0.3s ease;
-            
-            /* Border radius */
-            --radius-sm: 0.25rem;
-            --radius: 0.5rem;
-            --radius-lg: 0.75rem;
-            --radius-xl: 1rem;
-            
-            /* Spacing */
-            --space-xs: 0.5rem;
-            --space-sm: 1rem;
-            --space-md: 1.5rem;
-            --space-lg: 2rem;
-            --space-xl: 3rem;
-            --space-xxl: 4rem;
-            
-            /* Shadows */
-            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
-            --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.05), 0 10px 10px rgba(0, 0, 0, 0.04);
-        }
-
-        /* Reset global */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Animasi fade in untuk halaman */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ================================
-           BASE STYLES
-        =================================*/
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        body {
-            font-family: var(--font-body);
-            line-height: 1.6;
-            color: var(--dark);
-            background-color: var(--light);
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: var(--font-heading);
-            font-weight: 700;
-            line-height: 1.3;
-        }
-
-        h1 { font-size: 2.5rem; margin-bottom: var(--space-md); }
-        h2 { font-size: 2rem; margin-bottom: var(--space-md); }
-        h3 { font-size: 1.5rem; margin-bottom: var(--space-sm); }
-        h4 { font-size: 1.25rem; margin-bottom: var(--space-xs); }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-            transition: var(--transition);
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 var(--space-md);
-        }
-
-        .section {
-            padding: var(--space-xxl) 0;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-
-        .section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .section__title {
-            text-align: center;
-            margin-bottom: var(--space-xl);
-            position: relative;
-        }
-
-        /* Garis aksen di bawah judul */
-        .section__title::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background-color: var(--accent);
-            margin: var(--space-sm) auto 0;
-            border-radius: 2px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: var(--transition);
-            cursor: pointer;
-            min-height: 44px;
-            border: none;
-            gap: 0.5rem;
-        }
-
-        .btn--primary {
-            background-color: white;
-            color: var(--primary);
-            box-shadow: var(--shadow);
-        }
-
-        .btn--primary:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        /* ================================
-           HEADER
-        =================================*/
-        .header {
-            position: sticky;
-            top: 0;
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-        }
-
-        .header__container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: var(--space-sm) 0;
-            position: relative;
-        }
-
-        .header__logo-container {
-            display: flex;
-            align-items: center;
-            gap: var(--space-sm);
-        }
-
-        .header__logo {
-            height: 50px;
-            width: auto;
-        }
-
-        /* Navigasi Desktop */
-        .nav {
-            display: flex;
-            gap: var(--space-md);
-        }
-
-        .nav__link {
-            font-weight: 600;
-            transition: var(--transition);
-            position: relative;
-            padding: 0.5rem 0;
-        }
-
-        .nav__link:hover { 
-            color: var(--primary); 
-        }
-
-        /* Underline animasi di hover */
-        .nav__link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--primary);
-            transition: width 0.3s;
-        }
-
-        .nav__link:hover::after {
-            width: 100%;
-        }
-
-        /* Tombol menu mobile */
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            z-index: 1001;
-            width: 44px;
-            height: 44px;
-            justify-content: center;
-            align-items: center;
-            color: var(--dark);
-        }
-
-        /* ================================
-           MOBILE NAVIGATION (SIDEBAR)
-        =================================*/
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: flex;
-            }
-            
-            .nav {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 80%;
-                max-width: 300px;
-                height: 100vh;
-                background-color: white;
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 5rem var(--space-md) var(--space-md);
-                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-                transition: right 0.3s ease;
-                z-index: 999;
-            }
-            
-            .nav.active { 
-                right: 0; 
-            }
-            
-            .nav__link {
-                padding: var(--space-sm) 0;
-                width: 100%;
-                border-bottom: 1px solid var(--light-gray);
-                font-size: 1.1rem;
-            }
-            
-            /* Overlay ketika menu aktif */
-            .nav-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
-                z-index: 998;
-                opacity: 0;
-                visibility: hidden;
-                transition: var(--transition);
-            }
-            
-            .nav-overlay.active {
-                opacity: 1;
-                visibility: visible;
-            }
-        }
-
-        /* ================================
-           FOOTER
-        =================================*/
-        .footer {
-            background-color: var(--dark);
-            color: white;
-            padding: var(--space-xl) 0 var(--space-md);
-        }
-
-        .footer__content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: var(--space-md);
-            margin-bottom: var(--space-md);
-        }
-
-        .footer__column h3 {
-            margin-bottom: var(--space-md);
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
-
-        .footer__column h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50px;
-            height: 2px;
-            background-color: var(--accent);
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: var(--space-sm);
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-        }
-
-        .contact-item i {
-            margin-top: 0.25rem;
-            flex-shrink: 0;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 0.75rem;
-            margin-top: var(--space-sm);
-        }
-
-        .social-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
-            transition: var(--transition);
-        }
-
-        .social-link:hover {
-            background-color: var(--accent);
-            transform: translateY(-3px);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: var(--space-md);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        /* ================================
-           RESPONSIVE BREAKPOINTS
-        =================================*/
-        /* Large screens (max 1200px) */
-        @media (max-width: 1200px) {
-            .container { 
-                padding: 0 var(--space-md); 
-            }
-        }
-
-        /* Medium screens (max 992px) */
-        @media (max-width: 992px) {
-            :root {
-                --space-xxl: 3rem;
-                --space-xl: 2rem;
-            }
-        }
-
-        /* Tablet screens (max 768px) */
-        @media (max-width: 768px) {
-            .header__logo {
-                height: 40px;
-            }
-            
-            .section { 
-                padding: var(--space-xl) 0; 
-            }
-            
-            .section__title {
-                font-size: 1.5rem;
-                margin-bottom: var(--space-lg);
-            }
-            
-            .footer__content {
-                grid-template-columns: 1fr;
-                gap: var(--space-md);
-            }
-        }
-
-        /* Small screens (max 576px) */
-        @media (max-width: 576px) {
-            .container {
-                padding: 0 var(--space-sm);
-            }
-            
-            .btn { 
-                padding: 0.75rem 1.25rem; 
-                font-size: 0.9rem;
-            }
-            
-            .footer__column h3 {
-                font-size: 1.1rem;
-            }
-        }
-
-        /* Very small screens (max 400px) */
-        @media (max-width: 400px) {
-            .header__logo-container {
-                gap: 0.5rem;
-            }
-            
-            .header__logo {
-                height: 35px;
-            }
-            
-            .section__title {
-                font-size: 1.3rem;
-            }
-        }
-
-        /* ================================
-           ANIMATIONS & ACCESSIBILITY
-        =================================*/
-        /* Focus styles untuk aksesibilitas */
-        a:focus-visible,
-        button:focus-visible {
-            outline: 2px solid var(--accent);
-            outline-offset: 2px;
-        }
-
-        /* High contrast mode */
-        @media (prefers-contrast: high) {
-            :root {
-                --primary: #0044cc;
-                --secondary: #002b80;
-                --accent: #c57600;
-            }
-        }
-
-        /* Reduced motion preference */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-            
-            .section {
-                opacity: 1;
-                transform: none;
-            }
-        }
-
-        /* ================================
-           STRUKTUR ORGANISASI SPECIFIC
-        =================================*/
-        .org-structure {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 2rem 0;
-            width: 100%;
-            position: relative;
-        }
-        
-        .org-level {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2.5rem;
-            width: 100%;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            position: relative;
-        }
-
-        /* Garis penghubung vertikal */
-        .connector-line {
-            width: 2px;
-            height: 40px;
-            background-color: var(--primary-light);
-            margin: 0.5rem auto 2rem;
-            position: relative;
-        }
-
-        /* Level label */
-        .level-label {
-            text-align: center;
-            margin-bottom: 1rem;
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            width: 100%;
-        }
-
-        /* Pembina style khusus */
-        .pembina-card {
-            background: white;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            width: 250px;
-            text-align: center;
-            box-shadow: var(--shadow-lg);
-            transition: var(--transition);
-            border: 2px solid var(--accent);
-            position: relative;
-            z-index: 10;
-        }
-
-        .pembina-card .member-photo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--accent);
-            margin: 0 auto 1rem;
-        }
-
-        .pembina-card .member-position {
-            background-color: var(--accent);
-            color: white;
-            font-weight: 700;
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            display: inline-block;
-            margin-bottom: 0.5rem;
-        }
-
-        .member-card {
-            background: white;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            width: 220px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            transition: var(--transition);
-            border: 1px solid var(--light-gray);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-        }
-        
-        .member-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary-light);
-        }
-        
-        .member-photo {
-            width: 100px; 
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--secondary);
-            margin: 0 auto 1rem;
-            transition: var(--transition);
-        }
-        
-        .member-card:hover .member-photo {
-            border-color: var(--primary);
-            transform: scale(1.05);
-        }
-        
-        .member-name {
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-        
-        .member-position {
-            color: var(--primary);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            background-color: rgba(128, 0, 0, 0.05);
-            padding: 0.25rem 0.75rem;
-            border-radius: 1rem;
-            display: inline-block;
-        }
-
-        /* Container untuk Ketua & Wakil */
-        .ketua-wakil-container {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            position: relative;
-            width: 100%;
-            margin-bottom: 1rem;
-        }
-
-        /* Garis penghubung untuk Ketua & Wakil */
-        .ketua-wakil-connector {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 80%;
-            height: 2px;
-            background-color: var(--primary-light);
-            transform: translate(-50%, -50%);
-            z-index: -1;
-        }
-
-        /* Container untuk BPH */
-        .bph-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* Container untuk departemen */
-        .dept-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            width: 100%;
-        }
-
-        .dept-title {
-            width: 100%;
-            text-align: center;
-            margin-bottom: 2rem;
-            color: var(--primary);
-            font-size: 1.5rem;
-            position: relative;
-        }
-
-        .dept-title::after {
-            content: '';
-            display: block;
-            width: 100px;
-            height: 3px;
-            background-color: var(--accent);
-            margin: 0.5rem auto 0;
-            border-radius: 2px;
-        }
-
-        /* Departemen card */
-        .dept-card {
-            background: white;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border: 1px solid var(--light-gray);
-        }
-
-        .dept-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .dept-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .dept-icon {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-right: 1rem;
-        }
-
-        .dept-name {
-            font-weight: 700;
-            color: var(--dark);
-            font-size: 1.2rem;
-        }
-
-        .dept-members {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 1rem;
-        }
-
-        .dept-member {
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .dept-member-photo {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--light-gray);
-            margin: 0 auto 0.5rem;
-            transition: var(--transition);
-        }
-
-        .dept-member:hover .dept-member-photo {
-            border-color: var(--primary);
-            transform: scale(1.05);
-        }
-
-        .dept-member-name {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 0.25rem;
-        }
-
-        .dept-member-role {
-            font-size: 0.8rem;
-            color: var(--gray);
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed; 
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            padding: 1rem;
-        }
-        
-        .modal.active { 
-            display: flex; 
-            opacity: 1; 
-        }
-        
-        .modal-content {
-            background-color: white;
-            border-radius: 0.75rem;
-            width: 100%; 
-            max-width: 700px;
-            padding: 2rem;
-            position: relative;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: var(--shadow-lg);
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
-        }
-        
-        .modal.active .modal-content { 
-            transform: translateY(0); 
-        }
-        
-        .close-modal {
-            position: absolute; 
-            top: 1rem; right: 1rem;
-            font-size: 1.75rem;
-            cursor: pointer;
-            color: var(--dark);
-            transition: var(--transition);
-            background: none;
-            border: none;
-            width: 40px; height: 40px;
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            border-radius: 50%;
-        }
-        
-        .close-modal:hover {
-            color: var(--danger);
-            background-color: rgba(239,68,68,0.1);
-        }
-
-        .modal-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--light-gray);
-        }
-
-        .modal-photo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--secondary);
-        }
-
-        .modal-info {
-            margin-left: 1.5rem;
-        }
-
-        .modal-position {
-            color: var(--primary);
-            font-weight: 600;
-            margin: 0.5rem 0;
-            font-size: 1.1rem;
-        }
-
-        .modal-section {
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-section h4 {
-            color: var(--primary);
-            margin-bottom: 0.75rem;
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
-
-        .modal-section h4::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background-color: var(--accent);
-        }
-
-        .modal-section ul {
-            padding-left: 1.5rem;
-        }
-
-        .modal-section li {
-            margin-bottom: 0.5rem;
-            line-height: 1.5;
-        }
-
-        /* Responsive adjustments for org structure */
-        @media (max-width: 992px) {
-            .ketua-wakil-container {
-                gap: 2rem;
-            }
-            
-            .bph-container {
-                grid-template-columns: repeat(2, 1fr);
-                max-width: 600px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .org-level {
-                margin-bottom: 2rem;
-            }
-            
-            .connector-line {
-                height: 30px;
-                margin: 0.5rem auto 1.5rem;
-            }
-            
-            .ketua-wakil-container {
-                flex-direction: column;
-                align-items: center;
-                gap: 1.5rem;
-            }
-            
-            .ketua-wakil-connector {
-                display: none;
-            }
-            
-            .bph-container {
-                grid-template-columns: 1fr;
-                max-width: 400px;
-            }
-            
-            .dept-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .dept-card {
-                padding: 1.25rem;
-            }
-            
-            .dept-header {
-                margin-bottom: 1.25rem;
-            }
-            
-            .dept-members {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-                gap: 1rem;
-            }
-            
-            .modal-header {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .modal-info {
-                margin-left: 0;
-                margin-top: 1rem;
-            }
-            
-            .modal-content {
-                padding: 1.5rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .pembina-card,
-            .member-card {
-                width: 100%;
-                max-width: 280px;
-            }
-            
-            .dept-members {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .modal-photo {
-                width: 100px;
-                height: 100px;
-            }
-        }
-
-        @media (max-width: 400px) {
-            .dept-members {
-                grid-template-columns: 1fr;
-            }
-            
-            .modal-content {
-                padding: 1.25rem;
-            }
-            
-            .modal-section ul {
-                padding-left: 1.25rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Struktur OSIS</title>
+  <link rel="stylesheet" href="struktur.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 </head>
+<style>
+  :root {
+    /* Warna utama (Maroon Theme) */
+    --primary: #800000;
+    --primary-light: #a33333;
+    --secondary: #5a0000;
+    --accent: #d4a017;
+    --accent-dark: #b38614;
+    --light: #f8f0e8;
+    --light-gray: #e8e8e8;
+    --dark: #2a0a0a;
+    --gray: #64748b;
+    --success: #228B22;
+    --danger: #CC0000;
+    
+    /* Font keluarga */
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Open Sans', sans-serif;
+    
+    /* Transition untuk animasi */
+    --transition: all 0.3s ease;
+    
+    /* Border radius */
+    --radius-sm: 0.25rem;
+    --radius: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    
+    /* Spacing */
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 1.5rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+    --space-xxl: 4rem;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.05), 0 10px 10px rgba(0, 0, 0, 0.04);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: var(--font-body);
+    line-height: 1.6;
+    color: var(--dark);
+    background-color: var(--light);
+    animation: fadeIn 0.8s ease-out;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* ================================ HEADER =================================*/
+  .header {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+
+  .header__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-sm) 0;
+    position: relative;
+  }
+
+  .header__logo-container {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .header__logo {
+    height: 50px;
+    width: auto;
+  }
+
+  /* Navigasi Desktop */
+  .nav {
+    display: flex;
+    gap: var(--space-md);
+  }
+
+  .nav__link {
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--dark);
+    transition: var(--transition);
+    position: relative;
+    padding: 0.5rem 0;
+  }
+
+  .nav__link:hover, .nav__link.active {
+    color: var(--primary);
+  }
+
+  /* Underline animasi di hover */
+  .nav__link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary);
+    transition: width 0.3s;
+  }
+
+  .nav__link:hover::after, .nav__link.active::after {
+    width: 100%;
+  }
+
+  /* Tombol menu mobile */
+  .mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1001;
+    width: 44px;
+    height: 44px;
+    justify-content: center;
+    align-items: center;
+    color: var(--dark);
+  }
+
+  /* ================================ MOBILE NAVIGATION (SIDEBAR) =================================*/
+  @media (max-width: 768px) {
+    .mobile-menu-btn {
+      display: flex;
+    }
+    
+    .nav {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 80%;
+      max-width: 300px;
+      height: 100vh;
+      background-color: white;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 5rem var(--space-md) var(--space-md);
+      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+      transition: right 0.3s ease;
+      z-index: 999;
+    }
+    
+    .nav.active {
+      right: 0;
+    }
+    
+    .nav__link {
+      padding: var(--space-sm) 0;
+      width: 100%;
+      border-bottom: 1px solid var(--light-gray);
+      font-size: 1.1rem;
+    }
+    
+    /* Overlay ketika menu aktif */
+    .nav-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 998;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+    
+    .nav-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  /* ================================ STRUKTUR LAYOUT =================================*/
+  .struktur {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .title {
+    text-align: center;
+    margin-bottom: var(--space-lg);
+    font-family: var(--font-heading);
+    color: var(--primary);
+    font-size: 2.5rem;
+  }
+
+  section {
+    margin-bottom: var(--space-xl);
+  }
+
+  h2 {
+    margin-bottom: var(--space-md);
+    color: var(--secondary);
+    font-family: var(--font-heading);
+    position: relative;
+    padding-bottom: var(--space-xs);
+  }
+
+  h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent);
+  }
+
+  /* Card */
+  .card {
+    background: white;
+    padding: var(--space-md);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: var(--transition);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: var(--space-sm);
+    border: 3px solid var(--primary-light);
+  }
+
+  .card h3 {
+    color: var(--primary);
+    margin-bottom: var(--space-xs);
+    font-family: var(--font-heading);
+  }
+
+  .card p {
+    color: var(--gray);
+    margin-bottom: var(--space-sm);
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .clickable {
+    cursor: pointer;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .departemen-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .departemen-card {
+    background: white;
+    padding: var(--space-md);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+  }
+
+  .departemen-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+  }
+
+  .departemen-card h3 {
+    color: var(--primary);
+    margin-bottom: var(--space-md);
+    font-family: var(--font-heading);
+    text-align: center;
+    padding-bottom: var(--space-xs);
+    border-bottom: 2px solid var(--light-gray);
+  }
+
+  .departemen-card .anggota {
+    text-align: center;
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--light-gray);
+  }
+
+  .departemen-card .anggota img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary-light);
+    margin-bottom: var(--space-xs);
+  }
+
+  .departemen-card .anggota p {
+    font-weight: 600;
+    color: var(--primary);
+  }
+
+  .departemen-card ul {
+    list-style: none;
+  }
+
+  .departemen-card ul li {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--space-sm);
+    padding: var(--space-xs);
+    border-radius: var(--radius-sm);
+    transition: var(--transition);
+  }
+
+  .departemen-card ul li:hover {
+    background-color: var(--light-gray);
+  }
+
+  .departemen-card ul li img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: var(--space-sm);
+    border: 2px solid var(--light-gray);
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    z-index: 999;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .modal {
+    position: fixed;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    background: white;
+    padding: var(--space-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    display: none;
+    z-index: 1000;
+    transition: var(--transition);
+    animation: modalFadeIn 0.3s ease forwards;
+  }
+
+  @keyframes modalFadeIn {
+    to {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+  }
+
+  .modal.active,
+  .modal-overlay.active {
+    display: block;
+  }
+
+  .modal h2 {
+    color: var(--primary);
+    margin-bottom: var(--space-md);
+    text-align: center;
+  }
+
+  .modal p {
+    margin-bottom: var(--space-sm);
+  }
+
+  .modal ul {
+    margin-left: var(--space-md);
+    margin-bottom: var(--space-md);
+  }
+
+  .modal ul li {
+    margin-bottom: var(--space-xs);
+  }
+
+  .close-modal {
+    display: block;
+    margin: 0 auto;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 600;
+  }
+
+  .close-modal:hover {
+    background: var(--secondary);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 576px) {
+    .title {
+      font-size: 2rem;
+    }
+    
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .departemen-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .modal {
+      padding: var(--space-md);
+    }
+  }
+</style>
 <body>
-    <!-- Header Section -->
-    <header class="header">
-        <div class="container header__container">
-            <div class="header__logo-container">
-                <img src="foto/logo-sekolah.png" alt="Logo Sekolah" class="header__logo">
-                <img src="foto/logo-osis.png" alt="Logo OSIS" class="header__logo">
-            </div>
-            
-            <nav class="nav" aria-label="Main navigation">
-                <a href="index.html" class="nav__link">Beranda</a>
-                <a href="struktur.html" class="nav__link">Struktur OSIS</a>
-                <a href="kalender.html" class="nav__link">Kalender Kegiatan</a>
-                <a href="news.html" class="nav__link">Berita & Pengumuman</a>
-            </nav>
-            
-            <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
-            <div class="nav-overlay"></div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main id="main-content">
-        <section class="section">
-            <div class="container">
-                <h2 class="section__title">Struktur Kepengurusan</h2>
-                
-                <section class="org-structure">
-                    <!-- Level 1: Pembina -->
-                    <div class="level-label">Pembina</div>
-                    <div class="org-level">
-                        <div class="pembina-card" onclick="showMemberDetail('pembina')">
-                            <img src="https://randomuser.me/api/portraits/men/60.jpg" alt="Pembina OSIS" class="member-photo">
-                            <div class="member-name">Dr. Ahmad Fauzi, M.Pd</div>
-                            <div class="member-position">Pembina OSIS</div>
-                        </div>
-                    </div>
-
-                    <!-- Garis penghubung -->
-                    <div class="connector-line"></div>
-
-                    <!-- Level 2: Ketua dan Wakil -->
-                    <div class="level-label">Ketua & Wakil Ketua</div>
-                    <div class="org-level">
-                        <div class="ketua-wakil-container">
-                            <div class="ketua-wakil-connector"></div>
-                            <div class="member-card" onclick="showMemberDetail('ketua')">
-                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Ketua OSIS" class="member-photo">
-                                <div class="member-name">Andi Wijaya</div>
-                                <div class="member-position">Ketua OSIS</div>
-                            </div>
-                            <div class="member-card" onclick="showMemberDetail('wakil')">
-                                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Wakil Ketua OSIS" class="member-photo">
-                                <div class="member-name">Budi Santoso</div>
-                                <div class="member-position">Wakil Ketua OSIS</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Garis penghubung -->
-                    <div class="connector-line"></div>
-
-                    <!-- Level 3: BPH -->
-                    <div class="level-label">Badan Pengurus Harian</div>
-                    <div class="org-level">
-                        <div class="bph-container">
-                            <div class="member-card" onclick="showMemberDetail('sekretaris1')">
-                                <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Sekretaris 1" class="member-photo">
-                                <div class="member-name">Citra Lestari</div>
-                                <div class="member-position">Sekretaris 1</div>
-                            </div>
-                            <div class="member-card" onclick="showMemberDetail('sekretaris2')">
-                                <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Sekretaris 2" class="member-photo">
-                                <div class="member-name">Dedi Pratama</div>
-                                <div class="member-position">Sekretaris 2</div>
-                            </div>
-                            <div class="member-card" onclick="showMemberDetail('bendahara1')">
-                                <img src="https://randomuser.me/api/portraits/women/28.jpg" alt="Bendahara 1" class="member-photo">
-                                <div class="member-name">Eka Suryani</div>
-                                <div class="member-position">Bendahara 1</div>
-                            </div>
-                            <div class="member-card" onclick="showMemberDetail('bendahara2')">
-                                <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Bendahara 2" class="member-photo">
-                                <div class="member-name">Fajar Setiawan</div>
-                                <div class="member-position">Bendahara 2</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Garis penghubung -->
-                    <div class="connector-line"></div>
-
-                    <!-- Level 4: Departemen -->
-                    <div class="level-label">Departemen</div>
-                    <div class="org-level">
-                        <div class="dept-container">
-                            <!-- Departemen 1 -->
-                            <div class="dept-card">
-                                <div class="dept-header">
-                                    <i class="fas fa-paint-brush dept-icon"></i>
-                                    <div class="dept-name">Bidang Kreativitas & Seni</div>
-                                </div>
-                                <div class="dept-members">
-                                    <div class="dept-member" onclick="showMemberDetail('seni1')">
-                                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Koordinator Seni" class="dept-member-photo">
-                                        <div class="dept-member-name">Gita Maharani</div>
-                                        <div class="dept-member-role">Koordinator</div>
-                                    </div>
-                                    <div class="dept-member" onclick="showMemberDetail('seni2')">
-                                        <img src="https://randomuser.me/api/portraits/men/18.jpg" alt="Anggota Seni" class="dept-member-photo">
-                                        <div class="dept-member-name">Hendra Kurnia</div>
-                                        <div class="dept-member-role">Anggota</div>
-                                    </div>
-                                    <div class="dept-member" onclick="showMemberDetail('seni3')">
-                                        <img src="https://randomuser.me/api/portraits/women/56.jpg" alt="Anggota Seni" class="dept-member-photo">
-                                        <div class="dept-member-name">Indah Permata</div>
-                                        <div class="dept-member-role">Anggota</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Departemen 2 -->
-                            <div class="dept-card">
-                                <div class="dept-header">
-                                    <i class="fas fa-book dept-icon"></i>
-                                    <div class="dept-name">Bidang Pendidikan</div>
-                                </div>
-                                <div class="dept-members">
-                                    <div class="dept-member" onclick="showMemberDetail('pendidikan1')">
-                                        <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="Koordinator Pendidikan" class="dept-member-photo">
-                                        <div class="dept-member-name">Joko Susilo</div>
-                                        <div class="dept-member-role">Koordinator</div>
-                                    </div>
-                                    <div class="dept-member" onclick="showMemberDetail('pendidikan2')">
-                                        <img src="https://randomuser.me/api/portraits/women/23.jpg" alt="Anggota Pendidikan" class="dept-member-photo">
-                                        <div class="dept-member-name">Kartika Sari</div>
-                                        <div class="dept-member-role">Anggota</div>
-                                    </div>
-                                    <div class="dept-member" onclick="showMemberDetail('pendidikan3')">
-                                        <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Anggota Pendidikan" class="dept-member-photo">
-                                        <div class="dept-member-name">Lukman Hakim</div>
-                                        <div class="dept-member-role">Anggota</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Departemen 3 -->
-                            <div class="dept-card">
-                                <div class="dept-header">
-                                    <i class="fas fa-heart dept-icon"></i>
-                                    <div class="dept-name">Bidang Sosial</div>
-                                </div>
-                                <div class="dept-members">
-                                    <div class="dept-member" onclick="showMemberDetail('sosial1')">
-                                        <img src="https://randomuser.me/api/portraits/women/41.jpg" alt="Koordinator Sosial" class="dept-member-photo">
-                                        <div class="dept-member-name">Maya Wati</div>
-                                        <div class="dept-member-role">Koordinator</div>
-                                    </div>
-                                    <div class="dept-member" onclick="showMemberDetail('sosial2')">
-                                        <img src="https://randomuser.me/api/portraits/men/29.jpg" alt="Anggota Sosial" class="dept-member-photo">
-                                        <div class="dept-member-name">Nur Cahyo</div>
-                                        <div class="dept-member-role">Anggota</div>
-                                    </div>
-                                    <div class="dept-member" onclick="showMemberDetail('sosial3')">
-                                        <img src="https://randomuser.me/api/portraits/women/19.jpg" alt="Anggota Sosial" class="dept-member-photo">
-                                        <div class="dept-member-name">Oki Setiawan</div>
-                                        <div class="dept-member-role">Anggota</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Departemen 4 -->
-                            <div class="dept-card">
-                                <div class="dept-header">
-                                    <i class="fas fa-futbol dept-icon"></i>
-                                    <div class="dept-name">Bidang Olahraga</div>
-                                </div>
-                                <div class="dept-members">
-                                    <div class="dept-member" onclick="showMemberDetail('olahraga1')">
-                                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Koordinator Olahraga" class="dept-member-photo">
-                                        <div class="dept-member-name">Prasetyo Utomo</div>
-                                        <div class="dept-member-role">Koordinator</div>
-                                    </div>
-                                    <div class="dept-member" onclick="showMemberDetail('olahraga2')">
-                                        <img src="https://randomuser.me/api/portraits/men/33.jpg" alt="Anggota Olahraga" class="dept-member-photo">
-                                        <div class="dept-member-name">Rizky Pratama</div>
-                                        <div class="dept-member-role">Anggota</div>
-                                    </div>
-                                    <div class="dept-member" onclick="showMemberDetail('olahraga3')">
-                                        <img src="https://randomuser.me/api/portraits/women/37.jpg" alt="Anggota Olahraga" class="dept-member-photo">
-                                        <div class="dept-member-name">Sari Indah</div>
-                                        <div class="dept-member-role">Anggota</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </section>
-    </main>
-
-    <!-- Modal Detail Anggota -->
-    <div class="modal" id="memberModal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeModal()">&times;</button>
-            <div class="modal-header">
-                <img src="" alt="Foto Anggota" class="modal-photo" id="modalPhoto">
-                <div class="modal-info">
-                    <h3 id="modalName"></h3>
-                    <div class="modal-position" id="modalPosition"></div>
-                    <div id="modalDepartment"></div>
-                </div>
-            </div>
-            
-            <div class="modal-section">
-                <h4>Tugas & Tanggung Jawab</h4>
-                <ul id="modalResponsibilities"></ul>
-            </div>
-            
-            <div class="modal-section">
-                <h4>Program Kerja</h4>
-                <ul id="modalPrograms"></ul>
-            </div>
-            
-            <div class="modal-section">
-                <h4>Kontak</h4>
-                <p id="modalContact"></p>
-            </div>
-        </div>
+  <!-- Header Section -->
+  <header class="header">
+    <div class="container header__container">
+      <div class="header__logo-container">
+        <img src="foto/logo-sekolah.png" alt="Logo Sekolah" class="header__logo">
+        <img src="foto/logo-osis.png" alt="Logo OSIS" class="header__logo">
+      </div>
+      
+      <nav class="nav">
+        <a href="index.html" class="nav__link">Beranda</a>
+        <a href="struktur.html" class="nav__link active">Struktur OSIS</a>
+        <a href="kalender.html" class="nav__link">Kalender Kegiatan</a>
+        <a href="news.html" class="nav__link">Berita & Pengumuman</a>
+      </nav>
+      
+      <button class="mobile-menu-btn" aria-label="Toggle mobile menu">☰</button>
+      <div class="nav-overlay"></div>
     </div>
+  </header>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer__content">
-                <div class="footer__column">
-                    <h3>Tentang OSIS</h3>
-                    <p>Organisasi Siswa Intra Sekolah (OSIS) SMA Contoh adalah organisasi resmi di sekolah yang menjadi wadah bagi siswa untuk mengembangkan bakat, kreativitas, dan kepemimpinan.</p>
-                </div>
-                
-                <div class="footer__column">
-                    <h3>Kontak Kami</h3>
-                    <div class="contact-info">
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Jl. Pendidikan No. 123, Kota Contoh</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <span>(021) 7654321</span>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <span>osis@sma-contoh.sch.id</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="footer__column">
-                    <h3>Ikuti Kami</h3>
-                    <p>Ikuti media sosial kami untuk mendapatkan informasi terbaru tentang kegiatan OSIS.</p>
-                    <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>&copy; 2023 OSIS SMA Contoh. Semua Hak Dilindungi.</p>
-            </div>
+  <!-- Struktur OSIS -->
+  <main class="container struktur">
+    <h1 class="title">Struktur Pengurus OSIS</h1>
+
+    <!-- Pembina -->
+    <section>
+      <h2>Pembina OSIS</h2>
+      <div class="card">
+        <img src="foto/pembina.jpg" alt="Pembina OSIS" onerror="this.src='https://via.placeholder.com/120x120?text=Foto+Pembina'">
+        <h3>Nama Pembina</h3>
+        <p>Pembina OSIS</p>
+      </div>
+    </section>
+
+    <!-- Ketos & Waketos -->
+    <section>
+      <h2>Ketua & Wakil Ketua OSIS</h2>
+      <div class="grid">
+        <div class="card clickable" data-modal="ketos">
+          <img src="foto/ketos.jpg" alt="Ketua OSIS" onerror="this.src='https://via.placeholder.com/120x120?text=Foto+Ketua'">
+          <h3>Nama Ketua</h3>
+          <p>Ketua OSIS</p>
         </div>
-    </footer>
+        <div class="card clickable" data-modal="waketos">
+          <img src="foto/waketos.jpg" alt="Wakil Ketua OSIS" onerror="this.src='https://via.placeholder.com/120x120?text=Foto+Wakil'">
+          <h3>Nama Wakil</h3>
+          <p>Wakil Ketua OSIS</p>
+        </div>
+      </div>
+    </section>
 
-    <script>
-        // Data anggota OSIS
-        const members = {
-            pembina: {
-                name: "Dr. Ahmad Fauzi, M.Pd",
-                position: "Pembina OSIS",
-                photo: "https://randomuser.me/api/portraits/men/60.jpg",
-                responsibilities: [
-                    "Memberikan bimbingan dan arahan kepada pengurus OSIS",
-                    "Mengawasi pelaksanaan program kerja OSIS",
-                    "Menjadi penghubung antara OSIS dengan pihak sekolah"
-                ],
-                programs: [
-                    "Program pembinaan karakter kepemimpinan siswa",
-                    "Monitoring dan evaluasi kegiatan OSIS",
-                    "Pengembangan kapasitas pengurus OSIS"
-                ],
-                contact: "Email: ahmad.fauzi@sma-contoh.sch.id"
-            },
-            ketua: {
-                name: "Andi Wijaya",
-                position: "Ketua OSIS",
-                photo: "https://randomuser.me/api/portraits/men/32.jpg",
-                responsibilities: [
-                    "Memimpin organisasi dan memastikan terlaksananya program kerja",
-                    "Mengkoordinasikan seluruh pengurus OSIS",
-                    "Mewakili OSIS dalam berbagai kegiatan"
-                ],
-                programs: [
-                    "Program kerja tahunan OSIS",
-                    "Rapat koordinasi mingguan",
-                    "Monitoring kegiatan setiap departemen"
-                ],
-                contact: "Email: andi.wijaya@sma-contoh.sch.id | Instagram: @andi_wijaya"
-            },
-            wakil: {
-                name: "Budi Santoso",
-                position: "Wakil Ketua OSIS",
-                photo: "https://randomuser.me/api/portraits/women/44.jpg",
-                responsibilities: [
-                    "Mendampingi ketua dalam memimpin organisasi",
-                    "Menggantikan ketua ketika berhalangan hadir",
-                    "Mengkoordinasikan kegiatan antar departemen"
-                ],
-                programs: [
-                    "Program sinergi antar departemen",
-                    "Evaluasi kinerja pengurus harian",
-                    "Pengembangan sistem dokumentasi kegiatan"
-                ],
-                contact: "Email: budi.santoso@sma-contoh.sch.id | Instagram: @budi_santoso"
-            },
-            // Data untuk anggota lainnya...
-        };
+    <!-- BPH -->
+    <section>
+      <h2>Badan Pengurus Harian (BPH)</h2>
+      <div class="grid">
+        <div class="card clickable" data-modal="sekretaris">
+          <img src="foto/sekretaris.jpg" alt="Sekretaris" onerror="this.src='https://via.placeholder.com/120x120?text=Foto+Sekretaris'">
+          <h3>Nama Sekretaris</h3>
+          <p>Sekretaris</p>
+        </div>
+        <div class="card clickable" data-modal="bendahara">
+          <img src="foto/bendahara.jpg" alt="Bendahara" onerror="this.src='https://via.placeholder.com/120x120?text=Foto+Bendahara'">
+          <h3>Nama Bendahara</h3>
+          <p>Bendahara</p>
+        </div>
+        <div class="card clickable" data-modal="koordinator">
+          <img src="foto/koordinator.jpg" alt="Koordinator" onerror="this.src='https://via.placeholder.com/120x120?text=Foto+Koordinator'">
+          <h3>Nama Koordinator</h3>
+          <p>Koordinator</p>
+        </div>
+      </div>
+    </section>
 
-        // Fungsi untuk menampilkan detail anggota
-        function showMemberDetail(memberId) {
-            const member = members[memberId];
-            if (!member) return;
-            
-            document.getElementById('modalPhoto').src = member.photo;
-            document.getElementById('modalName').textContent = member.name;
-            document.getElementById('modalPosition').textContent = member.position;
-            
-            const responsibilitiesList = document.getElementById('modalResponsibilities');
-            responsibilitiesList.innerHTML = '';
-            member.responsibilities.forEach(resp => {
-                const li = document.createElement('li');
-                li.textContent = resp;
-                responsibilitiesList.appendChild(li);
-            });
-            
-            const programsList = document.getElementById('modalPrograms');
-            programsList.innerHTML = '';
-            member.programs.forEach(program => {
-                const li = document.createElement('li');
-                li.textContent = program;
-                programsList.appendChild(li);
-            });
-            
-            document.getElementById('modalContact').textContent = member.contact;
-            
-            document.getElementById('memberModal').classList.add('active');
-            document.body.style.overflow = 'hidden'; // Mencegah scroll di latar belakang
+    <!-- Departemen -->
+    <section>
+      <h2>Departemen</h2>
+      <div class="departemen-grid">
+        <!-- Departemen 1 -->
+        <div class="departemen-card">
+          <h3>Departemen Agama dan Keimanan</h3>
+          <div class="anggota">
+            <img src="foto/dep1-kor.jpg" alt="Koordinator" onerror="this.src='https://via.placeholder.com/80x80?text=Koor'">
+            <p><strong>Koordinator</strong></p>
+            <p>Nama Koordinator</p>
+          </div>
+          <ul>
+            <li><img src="foto/dep1-ang1.jpg" onerror="this.src='https://via.placeholder.com/40x40?text=A1'"> Anggota 1</li>
+            <li><img src="foto/dep1-ang2.jpg" onerror="this.src='https://via.placeholder.com/40x40?text=A2'"> Anggota 2</li>
+            <li><img src="foto/dep1-ang3.jpg" onerror="this.src='https://via.placeholder.com/40x40?text=A3'"> Anggota 3</li>
+          </ul>
+        </div>
+
+        <!-- Departemen 2 -->
+        <div class="departemen-card">
+          <h3>Departemen Pendidikan</h3>
+          <div class="anggota">
+            <img src="foto/dep2-kor.jpg" alt="Koordinator" onerror="this.src='https://via.placeholder.com/80x80?text=Koor'">
+            <p><strong>Koordinator</strong></p>
+            <p>Nama Koordinator</p>
+          </div>
+          <ul>
+            <li><img src="foto/dep2-ang1.jpg" onerror="this.src='https://via.placeholder.com/40x40?text=A1'"> Anggota 1</li>
+            <li><img src="foto/dep2-ang2.jpg" onerror="this.src='https://via.placeholder.com/40x40?text=A2'"> Anggota 2</li>
+            <li><img src="foto/dep2-ang3.jpg" onerror="this.src='https://via.placeholder.com/40x40?text=A3'"> Anggota 3</li>
+          </ul>
+        </div>
+
+        <!-- Tambahkan Departemen 3-8 dengan format sama -->
+        <!-- Saya tambahkan 2 contoh, Anda bisa menambahkan 6 lainnya -->
+        
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal Template -->
+  <div class="modal-overlay"></div>
+  
+  <div class="modal" id="modal-ketos">
+    <h2>Visi & Misi Ketua OSIS</h2>
+    <p><strong>Visi:</strong> Mewujudkan OSIS yang aktif, kreatif, dan inovatif.</p>
+    <p><strong>Misi:</strong></p>
+    <ul>
+      <li>Meningkatkan kerjasama antar siswa.</li>
+      <li>Mengembangkan potensi siswa di bidang akademik & non-akademik.</li>
+      <li>Menjadi wadah aspirasi siswa yang efektif.</li>
+      <li>Meningkatkan kualitas kegiatan ekstrakurikuler.</li>
+    </ul>
+  </div>
+
+  <div class="modal" id="modal-waketos">
+    <h2>Visi & Misi Wakil Ketua OSIS</h2>
+    <p><strong>Visi:</strong> Mendukung Ketua dalam mewujudkan OSIS yang solid.</p>
+    <p><strong>Misi:</strong></p>
+    <ul>
+      <li>Membantu koordinasi program kerja OSIS.</li>
+      <li>Mengawasi jalannya kegiatan OSIS.</li>
+      <li>Menggantikan peran ketua ketika berhalangan.</li>
+      <li>Memastikan komunikasi antar divisi berjalan lancar.</li>
+    </ul>
+  </div>
+
+  <div class="modal" id="modal-sekretaris">
+    <h2>Visi & Misi Sekretaris</h2>
+    <p><strong>Visi:</strong> Administrasi OSIS yang rapi dan efektif.</p>
+    <p><strong>Misi:</strong></p>
+    <ul>
+      <li>Mencatat seluruh kegiatan OSIS secara sistematis.</li>
+      <li>Menjadi penghubung administrasi antar divisi.</li>
+      <li>Mengarsipkan dokumen-dokumen penting OSIS.</li>
+      <li>Menyusun laporan kegiatan secara berkala.</li>
+    </ul>
+  </div>
+
+  <div class="modal" id="modal-bendahara">
+    <h2>Visi & Misi Bendahara</h2>
+    <p><strong>Visi:</strong> Transparansi dan akuntabilitas keuangan OSIS.</p>
+    <p><strong>Misi:</strong></p>
+    <ul>
+      <li>Mengelola keuangan dengan transparan.</li>
+      <li>Melaporkan setiap pemasukan & pengeluaran.</li>
+      <li>Menyusun anggaran kegiatan OSIS.</li>
+      <li>Memastikan penggunaan dana sesuai peruntukan.</li>
+    </ul>
+  </div>
+
+  <div class="modal" id="modal-koordinator">
+    <h2>Visi & Misi Koordinator</h2>
+    <p><strong>Visi:</strong> Koordinasi yang solid antar divisi.</p>
+    <p><strong>Misi:</strong></p>
+    <ul>
+      <li>Menyusun jadwal rapat rutin.</li>
+      <li>Menghubungkan antar departemen OSIS.</li>
+      <li>Memastikan program kerja berjalan sesuai timeline.</li>
+      <li>Mengevaluasi kinerja masing-masing departemen.</li>
+    </ul>
+  </div>
+
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const nav = document.querySelector('.nav');
+    const overlay = document.querySelector('.nav-overlay');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      nav.classList.toggle('active');
+      overlay.classList.toggle('active');
+      document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+    });
+
+    overlay.addEventListener('click', () => {
+      nav.classList.remove('active');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    // Modal logic
+    const modalOverlay = document.querySelector('.modal-overlay');
+    const modals = document.querySelectorAll('.modal');
+    const cards = document.querySelectorAll('.clickable');
+    const closeButtons = document.querySelectorAll('.close-modal');
+
+    function openModal(modalId) {
+      document.getElementById(modalId).classList.add('active');
+      modalOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModals() {
+      modals.forEach(m => m.classList.remove('active'));
+      modalOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const modalId = `modal-${card.dataset.modal}`;
+        openModal(modalId);
+      });
+    });
+
+    closeButtons.forEach(btn => {
+      btn.addEventListener('click', closeModals);
+    });
+
+    modalOverlay.addEventListener('click', closeModals);
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModals();
+    });
+
+    // Fallback for images
+    document.querySelectorAll('img').forEach(img => {
+      img.addEventListener('error', function() {
+        if (!this.src.includes('placeholder')) {
+          const text = this.alt || 'Image';
+          this.src = `https://via.placeholder.com/${this.width}x${this.height}?text=${encodeURIComponent(text)}`;
         }
-
-        // Fungsi untuk menutup modal
-        function closeModal() {
-            document.getElementById('memberModal').classList.remove('active');
-            document.body.style.overflow = ''; // Mengembalikan scroll
-        }
-
-        // Menutup modal ketika mengklik di luar konten modal
-        document.getElementById('memberModal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
-
-        // Fungsi untuk menu mobile
-        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
-            document.querySelector('.nav').classList.toggle('active');
-            document.querySelector('.nav-overlay').classList.toggle('active');
-        });
-
-        document.querySelector('.nav-overlay').addEventListener('click', function() {
-            document.querySelector('.nav').classList.remove('active');
-            this.classList.remove('active');
-        });
-
-        // Intersection Observer untuk animasi saat scroll
-        const sections = document.querySelectorAll('.section');
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-    </script>
+      });
+    });
+  </script>
 </body>
 </html>
