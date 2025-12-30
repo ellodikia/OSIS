@@ -1,0 +1,518 @@
+/* ================================
+   CSS VARIABLES & CONFIGURATION
+=================================*/
+:root {
+    /* Warna utama (Maroon Theme) */
+    --primary: #800000;      /* Base Maroon */
+    --primary-light: #a33333; /* Light Maroon (Hover/Active) */
+    --secondary: #5a0000;    /* Darker Maroon */
+    --accent: #d4a017;       /* Goldenrod (Aksen/Kontras) */
+    --accent-dark: #b38614;  /* Darker Goldenrod */
+    
+    /* Warna tambahan */
+    --light: #f8f0e8;        /* Cream light untuk background halaman */
+    --light-gray: #e8e8e8;   /* Light gray untuk borders/garis pembatas */
+    --dark: #2a0a0a;         /* Dark reddish-black untuk teks utama/footer */
+    --gray: #64748b;         /* Gray untuk teks sekunder/deskripsi */
+    --success: #228B22;      /* Hijau untuk status sukses */
+    --danger: #CC0000;       /* Merah untuk status penting/peringatan */
+    
+    /* Font keluarga */
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Open Sans', sans-serif;
+    
+    /* Transition untuk animasi */
+    --transition: all 0.3s ease;
+    
+    /* Border radius */
+    --radius-sm: 0.25rem;
+    --radius: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    
+    /* Spacing (Jarak) */
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 1.5rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+    --space-xxl: 4rem;
+    
+    /* Shadows (Bayangan) */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 10px 15px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 20px 25px rgba(0, 0, 0, 0.05), 0 10px 10px rgba(0, 0, 0, 0.04);
+}
+
+/* ================================
+   BASE STYLES & RESETS
+=================================*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-body);
+    line-height: 1.6;
+    color: var(--dark);
+    background-color: var(--light);
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Kontainer utama */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+}
+
+/* Style untuk Section */
+.section {
+    padding: var(--space-xxl) 0;
+}
+
+.section__title {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+    position: relative;
+}
+
+/* Garis aksen di bawah judul section */
+.section__title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: var(--accent);
+    margin: var(--space-sm) auto 0;
+    border-radius: 2px;
+}
+
+/* Utility Class */
+.text-center {
+    text-align: center;
+}
+
+/* Tombol umum */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: var(--transition);
+    cursor: pointer;
+    min-height: 44px;
+    border: none;
+    gap: 0.5rem;
+}
+
+.btn-primary { /* Digunakan di PHP untuk tombol delete */
+    background-color: var(--primary);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-light);
+}
+
+
+/* ================================
+   NOTIFICATION STYLES (Alerts)
+=================================*/
+.alert {
+    padding: var(--space-sm) var(--space-md);
+    margin-bottom: var(--space-md);
+    border-radius: var(--radius);
+    font-weight: 600;
+    border: 1px solid transparent;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: var(--success);
+    border-color: #c3e6cb;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: var(--danger);
+    border-color: #f5c6cb;
+}
+
+/* ================================
+   GALLERY GRID
+=================================*/
+
+.gallery-grid {
+    display: grid;
+    /* Responsive: 2 kolom di HP, 3 di Tablet, 4 di Desktop */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    transition: var(--transition);
+    display: block; /* Memastikan anchor tag berperilaku seperti block */
+}
+
+.gallery-item:hover {
+    transform: scale(1.03); /* Sedikit lebih besar saat hover */
+    box-shadow: var(--shadow-lg);
+}
+
+.gallery-item__image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.gallery-item:hover .gallery-item__image {
+    transform: scale(1.08);
+}
+
+/* Overlay Galeri */
+.gallery-item__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 100%);
+    color: white;
+    padding: var(--space-md);
+    /* Ganti ke opacity/transition agar lebih halus daripada translateY */
+    opacity: 0;
+    transition: opacity var(--transition);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.gallery-item:hover .gallery-item__overlay {
+    opacity: 1;
+    background: linear-gradient(to top, rgba(128, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 100%);
+}
+
+.gallery-item__title {
+    font-size: 1.15rem;
+    margin: 0 0 5px 0;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.gallery-item__date {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: var(--space-xl);
+    border: 2px dashed var(--light-gray);
+    border-radius: var(--radius);
+    color: var(--gray);
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: var(--space-sm);
+    color: var(--primary-light);
+}
+
+/* ================================
+   ADMIN CONTROLS & FORM
+=================================*/
+.admin-badge {
+    background-color: var(--accent);
+    color: var(--dark);
+    font-size: 0.6em;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin-left: 10px;
+    vertical-align: middle;
+    font-family: var(--font-body);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Form Upload */
+.admin-form-container {
+    max-width: 650px; 
+    margin: var(--space-xl) auto;
+    padding: var(--space-lg);
+    background-color: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--light-gray);
+}
+
+.crud-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.form-group {
+    margin-bottom: var(--space-md);
+}
+
+.admin-form-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: var(--dark);
+    font-size: 1rem;
+}
+
+.admin-form-container input[type="text"],
+.admin-form-container textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--light-gray);
+    border-radius: var(--radius-sm);
+    box-sizing: border-box;
+    font-family: var(--font-body);
+    transition: border-color var(--transition);
+}
+
+.admin-form-container input[type="text"]:focus,
+.admin-form-container textarea:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(128, 0, 0, 0.1);
+}
+
+.admin-form-container textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.admin-form-container input[type="file"] {
+    display: block; 
+    padding: 10px 0;
+    font-size: 0.9rem;
+}
+
+.btn-submit {
+    background-color: var(--primary); /* Menggunakan primary untuk upload */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: var(--space-sm);
+}
+
+.btn-submit:hover {
+    background-color: var(--primary-light);
+}
+
+/* Tombol Hapus pada Item Galeri */
+.admin-actions {
+    margin-top: 5px;
+}
+
+.admin-control-btn.danger {
+    background: var(--danger);
+    color: white;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.admin-control-btn.danger:hover {
+    background: #a00;
+    transform: translateY(-1px);
+}
+
+/* ================================
+   MODAL (Lightbox)
+=================================*/
+
+.modal {
+    display: none; /* Disembunyikan secara default */
+    position: fixed; 
+    z-index: 2000; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.95); /* Lebih gelap */
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+    padding: var(--space-md);
+    transition: opacity 0.3s ease;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 900px;
+    position: relative;
+    background: transparent;
+    animation-name: zoom;
+    animation-duration: 0.3s;
+}
+
+@keyframes zoom {
+    from {transform:scale(0.8); opacity: 0;} 
+    to {transform:scale(1); opacity: 1;}
+}
+
+.modal-image {
+    width: 100%;
+    max-height: 80vh;
+    object-fit: contain; /* Memastikan gambar full terlihat */
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+.modal-info {
+    text-align: center;
+    color: #f1f1f1;
+    padding: var(--space-md) 0;
+}
+
+.modal-title {
+    color: white;
+    margin-bottom: 5px;
+    font-size: 1.5rem;
+}
+
+.modal-caption {
+    color: #ccc;
+    font-size: 1rem;
+}
+
+/* Tombol Tutup (Close Button) */
+.modal-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: var(--transition);
+    cursor: pointer;
+    line-height: 1;
+    padding: 5px 10px;
+}
+
+.modal-close:hover,
+.modal-close:focus {
+    color: var(--primary-light);
+}
+
+/* ================================
+   RESPONSIVE BREAKPOINTS
+=================================*/
+@media (max-width: 992px) {
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+    }
+}
+
+@media (max-width: 768px) {
+    .section { 
+        padding: var(--space-xl) 0; 
+    }
+    
+    .container {
+        padding: 0 var(--space-sm);
+    }
+    
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+    
+    .gallery-item__image {
+        height: 250px;
+    }
+
+    .admin-form-container {
+        max-width: 95%;
+        margin: var(--space-lg) auto;
+        padding: var(--space-md);
+    }
+    
+    .modal-image {
+        max-height: 70vh;
+    }
+
+    .modal-close {
+        top: 10px;
+        right: 15px;
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 576px) {
+    .gallery-grid {
+        grid-template-columns: 1fr; /* 1 kolom di HP kecil */
+    }
+    
+    .gallery-item__image {
+        height: 200px;
+    }
+
+    .modal-title {
+        font-size: 1.3rem;
+    }
+}
